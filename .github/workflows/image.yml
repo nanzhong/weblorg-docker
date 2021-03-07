@@ -3,12 +3,12 @@ name: image
 on:
   push:
     branches:
-      - **
+      - '**'
     tags:
-      - v*.*.*
+      - 'v*.*.*'
     pull_request:
       branches:
-        - **
+        - '**'
 
 jobs:
   image:
