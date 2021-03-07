@@ -1,0 +1,42 @@
+* weblorg-docker
+
+A companion container image that helps to streamline the iteration loop when developing [[https://github.com/emacs-love/weblorg][emacs-love/weblorg]] sites.
+
+The image ~nanzhong/weblorg~ is regularly built and pushed to Docker Hub.
+
+** How it works
+
+This container handles the rebuild iteration loop that's typical of static site generator. It expects a weblorg site to be mounted in and it will watch for changes triggering rebuilds as necessary. It imposes very little assumptions to how the weblorg site is configured except that a self-contained emacs lisp file exists that defines the weblorg site. Pre and post build scripts are also supported if additional processing is needed.
+
+The built static site is served using Caddy on port 80.
+
+*** Included dependencies
+- Emacs 27.1
+- sass
+- Caddy
+
+** Usage
+Example usage
+
+#+BEGIN_SRC sh
+docker run \
+       -v (pwd -P):/workspace \
+       -p 8080:80 \
+       --rm \
+       --name weblorg \
+       nanzhong/weblorg
+#+END_SRC
+
+This container image expects the weblorg site to be mounted as a volume into the container (by default to ~/workspace~). A caddy file server serves the built static site on port 80. Any file changes will kick off a rebuild of the site.
+
+*** Configuration
+There are a number environment variables that can be set to configure the behaviour. The defaults are shown below.
+
+| Env Var               | Default Value | Description                                                                                     |
+|-----------------------+---------------+-------------------------------------------------------------------------------------------------|
+| ~WORKSPACE~           | ~/workspace~  | Path in the container that the weblorg site is mounted to.                                      |
+| ~PRE_BUILD_SCRIPT~    | ~pre.sh~      | Pre-build script that will be run if it exists (e.g. sass compilation).                         |
+| ~POST_BUILD_SCRIPT~   | ~post.sh~     | Post-build script that will be run if it exists (e.g. additional asset processing).             |
+| ~WEBLORG_DEFN~        | ~publish.el~  | Emacs lisp script to run that contains the weblorg site definition.                             |
+| ~WEBLORG_OUTPUT_PATH~ | ~output~      | The directory configured in the weblorg site definition where the static site will be built to. |
+
