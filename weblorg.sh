@@ -23,12 +23,6 @@ weblorg_defn="${WEBLORG_DEFN:-publish.el}"
 # default: output
 weblorg_output_path="${WEBLORG_OUTPUT_PATH:-output}"
 
-# shutdown is the shutdown handler.
-function shutdown() {
-    echo "=> Stopping..."
-    exit 0
-}
-
 # run starts running a named command making sure to format stdout and stderr of
 # the command with descriptive line prefixes.
 # arguments: name, command, [arg1 arg2 ...]
@@ -75,21 +69,15 @@ function build() {
     fi
 }
 
-# serve starts a caddy file server to viewing the built weblorg site
+# dev starts a caddy file server to serve the built weblorg site and watches the
+# workspace for file changes to trigger rebuilds.
 # globals: $weblorg_output_path
-function serve() {
+function dev() {
     mkdir -p "$weblorg_output_path"
-    run "www" caddy file-server --root "$weblorg_output_path" --access-log
-}
-
-# main is the main body of the script
-# globals: $workspace
-function main() {
-    trap 'shutdown' TERM INT
-    trap 'kill 0' EXIT
 
     # start the file server
-    serve &
+    run "www" caddy file-server --root "$weblorg_output_path" --access-log &
+
     # kick off an initial build
     build
 
@@ -113,6 +101,35 @@ function main() {
                          --event modify,move,create,delete \
                          --exclude '\..+' \
                          "$workspace")
+}
+
+# main is the main body of the script
+# globals: $workspace
+function main() {
+    trap 'exit' TERM INT
+    trap 'kill 0' EXIT
+
+    command="$1"
+    case $command in
+        "" | "-h" | "--help")
+            echo "Usage: weblorg build|dev"
+            echo "  build: performs a one time build"
+            echo "  dev:   builds, starts a file server, and watches file changes to trigger rebuilds"
+            ;;
+        build)
+            echo "=> Starting a one off build..."
+            build
+            ;;
+        dev)
+            echo "=> Starting development..."
+            dev
+            ;;
+        *)
+            echo "Error: '$command' is not a supported command." >&2
+            echo "       Run 'weblorg --help' for a list of commands ." >&2
+            exit 1
+            ;;
+    esac
 }
 
 main "$@"

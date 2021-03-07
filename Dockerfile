@@ -9,4 +9,5 @@ COPY weblorg.sh /usr/local/bin/weblorg
 
 WORKDIR /workspace
 
-CMD ["weblorg"]
+ENTRYPOINT ["weblorg"]
+CMD ["dev"]
