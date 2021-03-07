@@ -2,7 +2,7 @@
 
 A companion container image that helps to streamline the iteration loop when developing [[https://github.com/emacs-love/weblorg][emacs-love/weblorg]] sites.
 
-The image ~nanzhong/weblorg~ is regularly built and pushed to Docker Hub.
+The image ~nanzhong/weblorg~ is regularly built and pushed to Docker Hub. In general, ~nanzhong/weblorg:latest~ should be stable and ready for use. However, tags that are pinned to [[https://github.com/nanzhong/weblorg-docker/releases][releases]] are built using the same name as the release and can be also be used.
 
 ** How it works
 
