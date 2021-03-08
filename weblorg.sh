@@ -49,20 +49,20 @@ function build() {
         echo "==> Detected pre-build script..."
 
         if [[ -x "$pre_build_script" ]]; then
-            run "pre" "./$pre_build_script"
+            run "pre" "./$pre_build_script" || true
         else
             echo "==> Pre-build script is not executable, skipping."
         fi
     fi
 
     echo "=> Exporting via weblorg..."
-    run "emacs" emacs --script "$weblorg_defn"
+    run "emacs" emacs --script "$weblorg_defn" || true
 
     if [[ -f "$post_build_script" ]]; then
         echo "==> Detected post-build script..."
 
         if [[ -x "$post_build_script" ]]; then
-            run "post" "./$post_build_script"
+            run "post" "./$post_build_script" || true
         else
             echo "==> Post-build script is not executable, skipping."
         fi
