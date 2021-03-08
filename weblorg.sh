@@ -98,8 +98,12 @@ function dev() {
         fi
     done < <(inotifywait --monitor \
                          --recursive \
-                         --event modify,move,create,delete \
                          --exclude '\..+' \
+                         --event modify \
+                         --event move \
+                         --event create \
+                         --event delete \
+                         --event attrib \
                          "$workspace")
 }
 
