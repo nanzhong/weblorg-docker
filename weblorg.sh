@@ -98,12 +98,13 @@ function dev() {
         fi
     done < <(inotifywait --monitor \
                          --recursive \
-                         --exclude '\..+' \
                          --event modify \
                          --event move \
                          --event create \
                          --event delete \
                          --event attrib \
+                         --exclude "(/\..+)|($workspace/$weblorg_output_path)" \
+                         --quiet \
                          "$workspace")
 }
 
