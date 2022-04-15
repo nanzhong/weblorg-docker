@@ -17,7 +17,7 @@ jobs:
 
       - name: Docker Meta
         id: docker_meta
-        uses: crazy-max/ghaction-docker-meta@v1
+        uses: docker/metadata-action@v3
         with:
           images: nanzhong/weblorg
           tag-sha: true
@@ -47,7 +47,7 @@ jobs:
 
       - name: Docker Meta
         id: docker_meta
-        uses: crazy-max/ghaction-docker-meta@v1
+        uses: docker/metadata-action@v3
         with:
           images: nanzhong/weblorg
           tag-sha: true
@@ -66,5 +66,5 @@ jobs:
         with:
           context: emacs28
           push: true
-          tags: ${{ steps.docker_meta.outputs.tags }}
+          tags: nanzhong/weblorg:28.1
           labels: ${{ steps.docker_meta.outputs.labels }}
