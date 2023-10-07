@@ -1,12 +1,14 @@
 #+TITLE: weblorg-docker
 
 A companion container image that helps to streamline the iteration loop when
-developing [[https://github.com/emacs-love/weblorg][emacs-love/weblorg]] sites.
+developing [[https://github.com/emacs-love/weblorg][emacs-love/weblorg] sites.
 
-The image ~nanzhong/weblorg~ is regularly built and pushed to Docker Hub. In
-general, ~nanzhong/weblorg:latest~ should be stable and ready for use. However,
-tags that are pinned to [[https://github.com/nanzhong/weblorg-docker/releases][releases]] are built using the same name as the release
-and can be also be used.
+This repository has been forked from [[https://github.com/nanzhong/weblorg-docker][nanzhong/weblorg-docker]] in an effort to
+support more modern versions of emacs.
+
+The image ~maker2413/weblorg~ is regularly built and pushed to Docker Hub. In
+general, ~maker2413/weblorg:latest~ should be stable and ready for use. However,
+tags also exist for versions ~27~ and ~28~ of emacs.
 
 ** How it works
    This container handles the rebuild iteration loop that's typical of static
@@ -32,7 +34,7 @@ and can be also be used.
              -p 8080:80 \
              --rm \
              --name weblorg \
-             nanzhong/weblorg
+             maker2413/weblorg
     #+END_SRC
 
     This container image expects the weblorg site to be mounted as a volume into
@@ -46,7 +48,7 @@ and can be also be used.
            -v $(pwd -P):/workspace \
            --rm \
            --name weblorg \
-           nanzhong/weblorg build
+           maker2413/weblorg build
     #+END_SRC
 
     This foregoes the file watching and serving of the static site and instead
