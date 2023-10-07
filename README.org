@@ -21,7 +21,7 @@ tags also exist for versions ~27~ and ~28~ of emacs.
    The built static site is served using Caddy on port 80.
 
 *** Included dependencies
-    - Emacs 27.1
+    - Emacs
     - sass
     - Caddy
 
