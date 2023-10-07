@@ -68,7 +68,7 @@ jobs:
         with:
           context: emacs28
           push: true
-          tags: maker2413/weblorg:28.1
+          tags: ${{ steps.docker_meta.outputs.tags }}
           labels: ${{ steps.docker_meta.outputs.labels }}
 
   emacs29-image:
