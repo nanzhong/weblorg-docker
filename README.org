@@ -1,7 +1,6 @@
 #+TITLE: weblorg-docker
-
 A companion container image that helps to streamline the iteration loop when
-developing [[https://github.com/emacs-love/weblorg][emacs-love/weblorg] sites.
+developing [[https://github.com/emacs-love/weblorg][emacs-love/weblorg]] sites.
 
 This repository has been forked from [[https://github.com/nanzhong/weblorg-docker][nanzhong/weblorg-docker]] in an effort to
 support more modern versions of emacs.
@@ -44,11 +43,11 @@ tags also exist for versions ~27~ and ~28~ of emacs.
 
 *** One Time Build
     #+BEGIN_SRC sh
-    docker run \
-           -v $(pwd -P):/workspace \
-           --rm \
-           --name weblorg \
-           maker2413/weblorg build
+      docker run \
+             -v $(pwd -P):/workspace \
+             --rm \
+             --name weblorg \
+             maker2413/weblorg build
     #+END_SRC
 
     This foregoes the file watching and serving of the static site and instead
